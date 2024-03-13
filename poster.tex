@@ -88,7 +88,7 @@
 \emph{Hand cricket} is a two-player game played with hand gestures (like rock-paper-scissors).
 It is popular among children in India.
 
-We generalize hand cricket to \emph{Repeat-Until-Collision (RUC) games}.
+We generalize it to \emph{Repeat-Until-Collision (RUC) games}.
 Parametrized by matrices $A, B \in \mathbb{R}_{\ge 0}^{n \times n}$.
 Rules:
 \begin{enumerate}
@@ -97,7 +97,7 @@ Rules:
     pick a number from $\{1, 2, \ldots, n\}$.
 \item If max player picks $i$ and min player picks $j$,
     max player scores $A[i, j]$, min player incurs a cost of $B[i, j]$.
-\item If $i = j$, the game ends. Else, proceed to next round.
+\item If $i = j$ (collision), the game ends. Else, proceed to next round.
 \item Max player wants to maximize her (expected) total score.
     Min player wants to minimize her (expected) total cost.
 \end{enumerate}
@@ -106,20 +106,20 @@ Hand cricket: $A[i, j] = B[i, j] = i$.
 
 \begin{figure}[htb]
 \centering
-\raisebox{-0.5\height}{\includegraphics[scale=0.45]{img/hand5.png}}%
+\raisebox{-0.5\height}{\includegraphics[scale=0.40]{img/hand5.png}}%
 \hfill
-\raisebox{-0.5\height}{\includegraphics[scale=0.5]{img/hand2.png}}%
+\raisebox{-0.5\height}{\includegraphics[scale=0.4]{img/hand2.png}}%
 \caption{Single round of hand cricket, where max player (left) played 5 and min player (right) played 2.
 Max player earned 5 points. Min player incurred a cost of 5 points.
 $5 \neq 2$, so game doesn't end.}
 \end{figure}
 
-Max-player can score more per round by playing high-scoring actions, but then the game can end sooner.
-Playing \emph{optimally} requires carefully balancing this tradeoff.
+Min player wants the game to end soon to prevent accumulating a large cost.
+Max player wants the opposite.
 
-%Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ultricies
-%eget libero ac ullamcorper. Integer et euismod ante. Aenean vestibulum
-%lobortis augue, ut lobortis turpis rhoncus sed.
+Max player can score more per round by playing high-scoring actions more frequently,
+but then the min player can cause a collision sooner.
+Playing \emph{optimally} requires carefully balancing this tradeoff.
 
 \end{block}
 
@@ -141,7 +141,9 @@ Playing \emph{optimally} requires carefully balancing this tradeoff.
 There are $n$ locations. Each day, a drug dealer picks a location to sell drugs,
 and law enforcement picks a location for a random check.
 If the locations match, the dealer is caught and the game ends.
+
 This is another example of an RUC game.
+They are also called \emph{hide-and-seek} games.
 
 \end{block}
 
@@ -218,7 +220,7 @@ where $\alpha = \displaystyle\frac{\sqrt{s_1}}{\sqrt{s_1} + \sqrt{s_2}}$.
 
 \heading{RUC Games}
 
-RUC games have a recursive structure:
+Our proof exploits the recursive structure of RUC games:
 after the first round, if the game doesn't end,
 the remaining game is identical to the original.
 \end{block}
