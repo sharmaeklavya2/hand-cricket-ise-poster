@@ -1,7 +1,7 @@
 % ISE conference template using Gemini project
 % https://github.com/anishathalye/gemini
 
-\documentclass[final]{beamer}
+\documentclass[final,20pt]{beamer}
 
 % ====================
 % Packages
@@ -9,13 +9,14 @@
 
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage[size=custom,width=76.2,height=120,scale=1.0]{beamerposter}
+\usepackage[size=custom,width=76.2,height=120,scale=1.2]{beamerposter}
 \setlength{\paperwidth}{30in}
 \setlength{\paperheight}{40in}
 \usetheme{gemini}
 \usecolortheme{gemini}
 \usecolortheme{beaver}
 
+\usepackage{amsmath,amsthm}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{tikz}
@@ -64,6 +65,13 @@
 \logoleft{\includegraphics[scale=1.3]{img/logo3.pdf}}
 
 % ====================
+% Macros
+% ====================
+
+\newcommand*{\defeq}{:=}
+\DeclareMathOperator{\graph}{graph}
+
+% ====================
 % Body
 % ====================
 
@@ -75,65 +83,45 @@
 
 \begin{column}{\colwidth}
 
-  \begin{block}{A block title}
+\begin{block}{Hand Cricket and RUC Games}
 
-    Some block contents, followed by a diagram, followed by a dummy paragraph.
+\emph{Hand cricket} is a two-player game played with hand gestures (like rock-paper-scissors).
+It is popular among children in India.
 
-    \begin{figure}
-      \centering
-      \begin{tikzpicture}[scale=6]
-        \draw[step=0.25cm,color=gray] (-1,-1) grid (1,1);
-        \draw (1,0) -- (0.2,0.2) -- (0,1) -- (-0.2,0.2) -- (-1,0)
-          -- (-0.2,-0.2) -- (0,-1) -- (0.2,-0.2) -- cycle;
-      \end{tikzpicture}
-      \caption{A figure caption.}
-    \end{figure}
+We generalize hand cricket to \emph{Repeat-Until-Collision (RUC) games}.
+Parametrized by matrices $A, B \in \mathbb{R}_{\ge 0}^{n \times n}$.
+Rules:
+\begin{enumerate}
+\item There are two players: max player (aka batter) and min player (aka bowler).
+\item There are multiple rounds. In each round, both players simultaneously
+    pick a number from $\{1, 2, \ldots, n\}$.
+\item If max player picks $i$ and min player picks $j$,
+    max player scores $A[i, j]$, min player incurs a cost of $B[i, j]$.
+\item If $i = j$, the game ends. Else, proceed to next round.
+\item Max player wants to maximize her (expected) total score.
+    Min player wants to minimize her (expected) total cost.
+\end{enumerate}
 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ultricies
-    eget libero ac ullamcorper. Integer et euismod ante. Aenean vestibulum
-    lobortis augue, ut lobortis turpis rhoncus sed.
+Hand cricket: $A[i, j] = B[i, j] = i$.
 
-  \end{block}
+\begin{figure}[htb]
+\centering
+\raisebox{-0.5\height}{\includegraphics[scale=0.45]{img/hand5.png}}%
+\hfill
+\raisebox{-0.5\height}{\includegraphics[scale=0.5]{img/hand2.png}}%
+\caption{Single round of hand cricket, where max player (left) played 5 and min player (right) played 2.
+Max player earned 5 points. Min player incurred a cost of 5 points.
+$5 \neq 2$, so game doesn't end.}
+\end{figure}
 
-  \begin{block}{A block containing a list}
+Max-player can score more per round by playing high-scoring actions, but then the game can end sooner.
+Playing \emph{optimally} requires carefully balancing this tradeoff.
 
-    Nam vulputate nunc felis, non condimentum lacus porta ultrices. Nullam sed
-    sagittis metus. Etiam consectetur gravida urna quis suscipit.
+%Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ultricies
+%eget libero ac ullamcorper. Integer et euismod ante. Aenean vestibulum
+%lobortis augue, ut lobortis turpis rhoncus sed.
 
-    \begin{itemize}
-      \item \textbf{Mauris tempor} risus nulla, sed ornare
-      \item \textbf{Libero tincidunt} a duis congue vitae
-      \item \textbf{Dui ac pretium} morbi justo neque, ullamcorper
-    \end{itemize}
-
-    Eget augue porta, bibendum venenatis tortor.
-
-  \end{block}
-
-  \begin{alertblock}{A highlighted block}
-
-    This block catches your eye, so \textbf{important stuff} should probably go
-    here.
-
-    Curabitur eu libero vehicula, cursus est fringilla, luctus est. Morbi
-    consectetur mauris quam, at finibus elit auctor ac. Aliquam erat volutpat.
-    Aenean at nisl ut ex ullamcorper eleifend et eu augue. Aenean quis velit
-    tristique odio convallis ultrices a ac odio.
-
-    \begin{itemize}
-      \item \textbf{Fusce dapibus tellus} vel tellus semper finibus. In
-        consequat, nibh sed mattis luctus, augue diam fermentum lectus.
-      \item \textbf{In euismod erat metus} non ex. Vestibulum luctus augue in
-        mi condimentum, at sollicitudin lorem viverra.
-      \item \textbf{Suspendisse vulputate} mauris vel placerat consectetur.
-        Mauris semper, purus ac hendrerit molestie, elit mi dignissim odio, in
-        suscipit felis sapien vel ex.
-    \end{itemize}
-
-    Aenean tincidunt risus eros, at gravida lorem sagittis vel. Vestibulum ante
-    ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.
-
-  \end{alertblock}
+\end{block}
 
 \end{column}
 
@@ -141,81 +129,52 @@
 
 \begin{column}{\colwidth}
 
-  \begin{block}{A block containing an enumerated list}
+\begin{block}{Pursuit-Evasion Games}
 
-    Vivamus congue volutpat elit non semper. Praesent molestie nec erat ac
-    interdum. In quis suscipit erat. \textbf{Phasellus mauris felis, molestie
-    ac pharetra quis}, tempus nec ante. Donec finibus ante vel purus mollis
-    fermentum. Sed felis mi, pharetra eget nibh a, feugiat eleifend dolor.
+\begin{figure}[htb]
+\centering
+\raisebox{-0.5\height}{\includegraphics[scale=0.5]{img/burglar.png}}%
+\hfill
+\raisebox{-0.5\height}{\includegraphics[scale=0.5]{img/police.png}}%
+\end{figure}
 
-    \begin{enumerate}
-      \item \textbf{Morbi mauris purus}, egestas at vehicula et, convallis
-        accumsan orci. Orci varius natoque penatibus et magnis dis parturient
-        montes, nascetur ridiculus mus.
-      \item \textbf{Cras vehicula blandit urna ut maximus}. Aliquam blandit nec
-        massa ac sollicitudin. Curabitur cursus, metus nec imperdiet bibendum,
-        velit lectus faucibus dolor, quis gravida metus mauris gravida turpis.
-      \item \textbf{Vestibulum et massa diam}. Phasellus fermentum augue non
-        nulla accumsan, non rhoncus lectus condimentum.
-    \end{enumerate}
+There are $n$ locations. Each day, a drug dealer picks a location to sell drugs,
+and law enforcement picks a location for a random check.
+If the locations match, the dealer is caught and the game ends.
+This is another example of an RUC game.
 
-  \end{block}
+\end{block}
 
-  \begin{block}{Fusce aliquam magna velit}
+\begin{block}{Nash Equilibria}
 
-    Et rutrum ex euismod vel. Pellentesque ultricies, velit in fermentum
-    vestibulum, lectus nisi pretium nibh, sit amet aliquam lectus augue vel
-    velit. Suspendisse rhoncus massa porttitor augue feugiat molestie. Sed
-    molestie ut orci nec malesuada. Sed ultricies feugiat est fringilla
-    posuere.
+A pair $(x, y)$ of strategies if called a \emph{Nash Equilibrium} (NE) if both of these hold:
+\begin{enumerate}
+\item If min player plays $y$, then playing $x$ maximizes max player's score.
+\item If max player plays $x$, then playing $y$ minimizes min player's cost.
+\end{enumerate}
 
-    \begin{figure}
-      \centering
-      \begin{tikzpicture}
-        \begin{axis}[
-            scale only axis,
-            no markers,
-            domain=0:2*pi,
-            samples=100,
-            axis lines=center,
-            axis line style={-},
-            ticks=none]
-          \addplot[red] {sin(deg(x))};
-          \addplot[blue] {cos(deg(x))};
-        \end{axis}
-      \end{tikzpicture}
-      \caption{Another figure caption.}
-    \end{figure}
+\end{block}
 
-  \end{block}
+\begin{alertblock}{Our Results}
 
-  \begin{block}{Nam cursus consequat egestas}
+Let $\Delta_n \defeq \{x \in \mathbb{R}_{\ge 0}^n: \sum_{i=1}^n x_i = 1\}$.
 
-    Nulla eget sem quam. Ut aliquam volutpat nisi vestibulum convallis. Nunc a
-    lectus et eros facilisis hendrerit eu non urna. Interdum et malesuada fames
-    ac ante \textit{ipsum primis} in faucibus. Etiam sit amet velit eget sem
-    euismod tristique. Praesent enim erat, porta vel mattis sed, pharetra sed
-    ipsum. Morbi commodo condimentum massa, \textit{tempus venenatis} massa
-    hendrerit quis.
+\emph{Stationary strategy} $x \in \Delta_n$:
+pick each action $i$ with probability $x_i$ independently in each round.
 
+A \emph{stationary RUC (SRUC) game} is one where both players are
+forced to play only stationary strategies.
 
-    \begin{itemize}
-      \item \textbf{Sed consequat} id ante vel efficitur. Praesent congue massa
-        sed est scelerisque, elementum mollis augue iaculis.
-        \begin{itemize}
+\textbf{Theorem 1.}
+Let $A$ and $B$ be irreducible matrices.
+\begin{enumerate}
+\item $\exists x, y \in \Delta_n$ such that
+    $(x, y)$ is an NE for both the SRUC game and the RUC game.
+\item NE is unique for SRUC game iff $\graph(A) \subseteq \graph(B)$.
+\item NE is almost-unique for RUC game if $A = B$.
+\end{enumerate}
 
-          \item Fusce ornare dignissim nisi. Nam sit amet risus vel lacus
-            tempor tincidunt eu a arcu.
-          \item Donec rhoncus vestibulum erat, quis aliquam leo
-            gravida egestas.
-        \end{itemize}
-      \item \textbf{Sed luctus, elit sit amet} dictum maximus, diam dolor
-        faucibus purus, sed lobortis justo erat id turpis.
-      \item \textbf{Pellentesque facilisis dolor in leo} bibendum congue.
-        Maecenas congue finibus justo, vitae eleifend urna facilisis at.
-    \end{itemize}
-
-  \end{block}
+\end{alertblock}
 
 \end{column}
 
@@ -223,42 +182,58 @@
 
 \begin{column}{\colwidth}
 
-  \begin{exampleblock}{A highlighted block containing some math}
+\begin{block}{Proof Sketch}
 
-    A different kind of highlighted block.
+\heading{SRUC Games}
 
-    $$
-    \int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi}
-    $$
+\textbf{Theorem 2.}
+If max player plays $x \in \Delta_n$ and min player plays $y \in \Delta_n$,
+then max player's expected total score is $x^TAy/x^Ty$
+and min player's expected total cost is $x^TBy/x^Ty$.
 
-    Interdum et malesuada fames $\{1, 4, 9, \ldots\}$ ac ante ipsum primis in
-    faucibus. Cras eleifend dolor eu nulla suscipit suscipit. Sed lobortis non
-    felis id vulputate.
+\begin{itemize}
+\item If $y$ is $A$'s eigenvector, max player's score is independent of $x$.
+\item If $x$ is $B^T$'s eigenvector, min player's cost is independent of $y$.
+\end{itemize}
 
-    \heading{A heading inside a block}
+If such eigenvectors exist, they would give us NE.
+But do they exist? Yes!
 
-    Praesent consectetur mi $x^2 + y^2$ metus, nec vestibulum justo viverra
-    nec. Proin eget nulla pretium, egestas magna aliquam, mollis neque. Vivamus
-    dictum $\mathbf{u}^\intercal\mathbf{v}$ sagittis odio, vel porta erat
-    congue sed. Maecenas ut dolor quis arcu auctor porttitor.
+\textbf{Perron-Frobenius Theorem.}
+Let $A \in \mathbb{R}_{\ge 0}^{n \times n}$ be irreducible. Then
+\begin{enumerate}
+\item \emph{(Perron root)}
+    $\exists$ eigenvalue $\rho \in \mathbb{R}_{\ge 0}$ that is largest in absolute value
+    among all (complex) eigenvalues.
+\item \emph{(Perron vectors)}
+    $\exists$ unique vectors $u$ and $v$ s.t. $A^Tu = \rho u$, $Av = \rho v$,
+    and $\sum_{i=1}^n u_i = \sum_{i=1}^n v_i = 1$.
+\item $u_i > 0$ and $v_i > 0$ for all $i$.
+\end{enumerate}
 
-    \heading{Another heading inside a block}
+\textbf{Example:}
+If $A = \begin{bmatrix}0 & s_1 \\ s_2 & 0\end{bmatrix}$, then
+$\rho = \sqrt{s_1s_2}$, $u = (1 - \alpha, \alpha)$, and $v = (\alpha, 1 - \alpha)$,
+where $\alpha = \displaystyle\frac{\sqrt{s_1}}{\sqrt{s_1} + \sqrt{s_2}}$.
 
-    Sed augue erat, scelerisque a purus ultricies, placerat porttitor neque.
-    Donec $P(y \mid x)$ fermentum consectetur $\nabla_x P(y \mid x)$ sapien
-    sagittis egestas. Duis eget leo euismod nunc viverra imperdiet nec id
-    justo.
+\heading{RUC Games}
 
-  \end{exampleblock}
+RUC games have a recursive structure:
+after the first round, if the game doesn't end,
+the remaining game is identical to the original.
+\end{block}
 
+\begin{block}{Paper}
 
+Published in conference FSTTCS 2023.
+\href{https://doi.org/10.4230/LIPIcs.FSTTCS.2023.18}{\texttt{doi:10.4230/LIPIcs.FSTTCS.2023.18}}
 
-  \begin{block}{References}
+\begin{figure}
+\centering
+\includegraphics[scale=1.0]{img/hc-doi.png}
+\end{figure}
 
-    \nocite{*}
-    \small{\bibliographystyle{plain}\bibliography{poster}}
-
-  \end{block}
+\end{block}
 
 \end{column}
 
